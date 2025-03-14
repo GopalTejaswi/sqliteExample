@@ -30,7 +30,6 @@ public class CustomerController {
         return response;
     }
 
-
     /*@PostMapping(value = "saveCustomers")
     public ResponseEntity<List<Customer>> saveCustomers(@RequestBody List<Customer> customers) {
         return (ResponseEntity<List<Customer>>) customerService.saveCustomers(customers);
