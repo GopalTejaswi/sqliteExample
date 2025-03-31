@@ -1,5 +1,6 @@
 package com.tejatechtutes.customer_orders.service;
 
+import com.tejatechtutes.customer_orders.model.Customer;
 import com.tejatechtutes.customer_orders.model.Order;
 import com.tejatechtutes.customer_orders.repository.CustomerRepository;
 import com.tejatechtutes.customer_orders.repository.OrderRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Teja K
@@ -17,9 +19,6 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
 
     public List<Order> getAllOrders() {
         List<Order> allOrders = orderRepository.findAll();
@@ -27,10 +26,19 @@ public class OrderService {
     }
 
     public Order saveOrder(Order order) {
-        /*Long customer_id = order.getCustomer().getId();
-        customerRepository.findById(customer_id)
-                .orElseThrow(() -> new RuntimeException("Customer Id" + customer_id+ "not found in db"));*/
         Order savedOrders = orderRepository.save(order);
         return savedOrders;
+    }
+
+    public String deleteOrderById(Long orderId) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        if (orderOptional.isPresent()) {
+            orderRepository.deleteById(orderId);
+            return "order with ID " + orderId + " deleted successfully";
+
+        } else {
+            throw new RuntimeException("order with ID " + orderId + " not found.");
+        }
+
     }
 }

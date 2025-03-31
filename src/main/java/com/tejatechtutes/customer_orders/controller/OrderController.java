@@ -35,4 +35,15 @@ public class OrderController {
         log.info("Order request body:{}", order);
         return orderService.saveOrder(order);
     }
+
+    @DeleteMapping(value = "deleteById/{orderId}")
+    public String deleteOrderById(@PathVariable("orderId") Long id) {
+        log.info("deleteOrderById called and ID:{}", id);
+        String s = orderService.deleteOrderById(id);
+        return s;
+
+
+    }
+
+
 }

@@ -22,7 +22,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping(value = "getAllCustomers")
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
@@ -39,8 +39,8 @@ public class CustomerController {
     }*/
 
     @DeleteMapping(value = "deleteById/{customerId}")
-    public String deleteCustomerById (@PathVariable("customerId") Long id) {
-        log.info("deleteCustomerById called and ID:{}",id);
+    public String deleteCustomerById(@PathVariable("customerId") Long id) {
+        log.info("deleteCustomerById called and ID:{}", id);
         String s = customerService.deleteCustomerById(id);
         return s;
 
