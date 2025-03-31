@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,12 +39,11 @@ public class OrderController {
     }
 
     @DeleteMapping(value = "deleteById/{orderId}")
-    public String deleteOrderById(@PathVariable("orderId") Long id) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> deleteOrderById(@PathVariable("orderId") Long id) {
         log.info("deleteOrderById called and ID:{}", id);
-        String s = orderService.deleteOrderById(id);
-        return s;
-
-
+        ResponseEntity<String> deletedOrderById = orderService.deleteOrderById(id);
+        return deletedOrderById;
     }
 
 

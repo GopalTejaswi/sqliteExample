@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class CustomerController {
     }*/
 
     @DeleteMapping(value = "deleteById/{customerId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteCustomerById(@PathVariable("customerId") Long id) {
         log.info("deleteCustomerById called and ID:{}", id);
         String s = customerService.deleteCustomerById(id);

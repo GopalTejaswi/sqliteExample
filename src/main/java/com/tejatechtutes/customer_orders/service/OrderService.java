@@ -5,6 +5,8 @@ import com.tejatechtutes.customer_orders.model.Order;
 import com.tejatechtutes.customer_orders.repository.CustomerRepository;
 import com.tejatechtutes.customer_orders.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,14 +32,14 @@ public class OrderService {
         return savedOrders;
     }
 
-    public String deleteOrderById(Long orderId) {
+    public ResponseEntity<String> deleteOrderById(Long orderId) {
         Optional<Order> orderOptional = orderRepository.findById(orderId);
         if (orderOptional.isPresent()) {
             orderRepository.deleteById(orderId);
-            return "order with ID " + orderId + " deleted successfully";
+            return ResponseEntity.ok("Order with ID " + orderId + " deleted successfully.");
 
         } else {
-            throw new RuntimeException("order with ID " + orderId + " not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order with ID " + orderId + " not found.");
         }
 
     }
