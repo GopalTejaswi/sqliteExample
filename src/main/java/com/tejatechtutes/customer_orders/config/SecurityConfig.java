@@ -33,10 +33,15 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()  // Public routes
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")  // Only Admins
-                .requestMatchers("/api/customer/**").hasRole("CUSTOMER")  // Only Customers
-                .anyRequest().authenticated()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/v3/api-docs").permitAll()
+                        .requestMatchers("/v3/api-docs.yaml").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()  // Public routes
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")  // Only Admins
+                        .requestMatchers("/api/customer/**").hasRole("CUSTOMER")  // Only Customers
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
